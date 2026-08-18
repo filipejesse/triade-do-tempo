@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tríade do Tempo — autoavaliação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E7EAEE;
+    --card:#FFFFFF;
+    --ink:#131A22;
+    --muted:#5F6B7A;
+    --line:#D2D8E0;
+    --line-strong:#B4BECB;
+    --imp:#0F766E;
+    --urg:#C2410C;
+    --cir:#6D5BA6;
+    --imp-soft:#0F766E1A;
+    --urg-soft:#C2410C1A;
+    --cir-soft:#6D5BA61A;
+    --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
+    --body:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.55;
+  }
+
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px 80px}
+
+  /* ---------- cabeçalho ---------- */
+  header{padding:56px 0 28px}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(38px,7vw,62px);
+    line-height:.98;
+    letter-spacing:-.03em;
+    margin:0 0 16px;
+  }
+  h1 em{font-style:normal;display:block;color:var(--muted)}
+  .lede{max-width:56ch;margin:0;color:#33404F}
+
+  /* ---------- escala ---------- */
+  .scale{
+    margin:26px 0 0;
+    border-top:1px solid var(--line-strong);
+    border-bottom:1px solid var(--line-strong);
+    padding:12px 0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 22px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .scale b{color:var(--ink);font-weight:600}
+
+  /* ---------- progresso ---------- */
+  .progress{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--bg);
+    padding:12px 0 10px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:8px;
+  }
+  .progress-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.04em;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .progress-row strong{color:var(--ink);font-weight:600}
+  .track{height:3px;background:var(--line-strong);position:relative;overflow:hidden}
+  .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--ink);transition:width .35s cubic-bezier(.2,.7,.3,1)}
+
+  /* ---------- perguntas ---------- */
+  ol.questions{list-style:none;margin:0;padding:0}
+  li.q{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:22px 22px 18px;
+    margin:12px 0;
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:0 4px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  li.q.answered{border-color:var(--line-strong);box-shadow:inset 3px 0 0 var(--ink)}
+  .num{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    color:var(--muted);
+    padding-top:3px;
+  }
+  li.q.answered .num{color:var(--ink)}
+  .qtext{margin:0 0 16px;font-size:16.5px;line-height:1.45}
+  fieldset{border:0;margin:0;padding:0;grid-column:2}
+  legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .opts{display:flex;gap:8px;flex-wrap:wrap}
+  .opt{position:relative;cursor:pointer}
+  .opt input{position:absolute;opacity:0;width:0;height:0}
+  .opt span{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:64px;
+    padding:8px 10px;
+    border:1px solid var(--line-strong);
+    border-radius:2px;
+    background:#fff;
+    transition:background .15s,border-color .15s,color .15s,transform .1s;
+  }
+  .opt span i{
+    font-family:var(--mono);
+    font-style:normal;
+    font-size:17px;
+    font-weight:600;
+    line-height:1.2;
+  }
+  .opt span small{
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .opt:hover span{border-color:var(--ink);transform:translateY(-1px)}
+  .opt input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff}
+  .opt input:checked + span small{color:#B9C3CF}
+  .opt input:focus-visible + span{outline:2px solid var(--urg);outline-offset:2px}
+
+  /* ---------- ações ---------- */
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0}
+  button{
+    font-family:var(--body);
+    font-size:14px;
+    font-weight:600;
+    padding:12px 20px;
+    border-radius:2px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:#fff;
+    cursor:pointer;
+    transition:opacity .15s,background .15s,color .15s;
+  }
+  button.ghost{background:transparent;color:var(--ink)}
+  button.ghost:hover{background:var(--ink);color:#fff}
+  button:disabled{opacity:.35;cursor:not-allowed}
+  button:focus-visible{outline:2px solid var(--urg);outline-offset:2px}
+  .hint{font-family:var(--mono);font-size:12px;color:var(--muted);margin:12px 0 0}
+
+  /* ---------- resultado ---------- */
+  #resultado[hidden]{display:none}
+  #resultado{margin-top:44px;scroll-margin-top:80px}
+  .res-head{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:10px;
+    margin-bottom:24px;
+  }
+  .dial-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:32px 24px;
+    display:flex;
+    gap:36px;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .dial{width:250px;height:250px;flex:0 0 auto}
+  .arc{transition:stroke-dasharray .8s cubic-bezier(.2,.7,.3,1),stroke-dashoffset .8s cubic-bezier(.2,.7,.3,1)}
+  .dial-center-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;fill:var(--muted)}
+  .dial-center-value{font-family:var(--display);font-size:44px;font-weight:700;fill:var(--ink)}
+  .dial-center-sub{font-family:var(--body);font-size:12.5px;fill:var(--muted)}
+
+  .bars{flex:1 1 300px;min-width:280px;display:flex;flex-direction:column;gap:18px}
+  .bar-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline}
+  .bar-name{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:8px}
+  .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .bar-pct{font-family:var(--mono);font-size:20px;font-weight:600}
+  .bar-track{grid-column:1/-1;height:8px;background:#EDF0F3;border-radius:2px;overflow:hidden}
+  .bar-fill{height:100%;width:0;border-radius:2px;transition:width .8s cubic-bezier(.2,.7,.3,1)}
+  .bar-meta{grid-column:1/-1;font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+  .delta{font-weight:600}
+  .delta.up{color:var(--urg)}
+  .delta.down{color:var(--muted)}
+  .delta.ok{color:var(--imp)}
+
+  .reading{margin-top:12px;display:grid;gap:12px}
+  .note{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--ink);
+    border-radius:2px;
+    padding:16px 18px;
+  }
+  .note h3{
+    margin:0 0 6px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .note p{margin:0;font-size:14.5px;color:#33404F}
+  .note.imp{border-left-color:var(--imp)} .note.imp h3{color:var(--imp)}
+  .note.urg{border-left-color:var(--urg)} .note.urg h3{color:var(--urg)}
+  .note.cir{border-left-color:var(--cir)} .note.cir h3{color:var(--cir)}
+
+  .totals{
+    margin-top:12px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    border-top:1px solid var(--line-strong);
+    padding-top:12px;
+  }
+  .totals b{color:var(--ink);font-weight:600}
+
+  footer{
+    margin-top:56px;
+    padding-top:20px;
+    border-top:1px solid var(--line-strong);
+    font-size:12.5px;
+    color:var(--muted);
+    max-width:62ch;
+  }
+
+  @media (max-width:640px){
+    header{padding:36px 0 20px}
+    li.q{grid-template-columns:1fr;padding:18px 16px 16px}
+    .num{padding:0 0 6px}
+    fieldset{grid-column:1}
+    .opts{gap:6px}
+    .opt span{min-width:0;flex:1 1 52px;padding:10px 4px}
+    .opt span small{display:none}
+    .dial{width:210px;height:210px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition-duration:.001ms !important;animation-duration:.001ms !important}
+  }
+
+  @media print{
+    body{background:#fff}
+    .progress,.actions,.hint{display:none}
+    li.q,.dial-card,.note{break-inside:avoid;border-color:#999}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow"><span>Autoavaliação</span><span>9 perguntas</span><span>≈ 2 minutos</span></p>
+    <h1>Tríade do Tempo<em>onde seu tempo está indo</em></h1>
+    <p class="lede">Responda pensando nas últimas semanas, não no dia ideal. A soma dos pontos é distribuída entre as três esferas — importância, urgência e circunstância — e o cálculo é feito automaticamente ao final.</p>
+    <div class="scale">
+      <span><b>1</b> Nunca</span>
+      <span><b>2</b> Raramente</span>
+      <span><b>3</b> Às vezes</span>
+      <span><b>4</b> Quase sempre</span>
+      <span><b>5</b> Sempre</span>
+    </div>
+  </header>
+
+  <div class="progress">
+    <div class="progress-row">
+      <span><strong id="contador">0</strong> de 9 respondidas</span>
+      <span id="statusTexto">Comece pela pergunta 1</span>
+    </div>
+    <div class="track"><div class="fill" id="barraProgresso"></div></div>
+  </div>
+
+  <ol class="questions" id="listaPerguntas"></ol>
+
+  <div class="actions">
+    <button id="btnCalcular" disabled>Ver resultado</button>
+    <button class="ghost" id="btnLimpar">Limpar respostas</button>
+  </div>
+  <p class="hint" id="dica">Responda as 9 perguntas para liberar o resultado.</p>
+
+  <section id="resultado" hidden aria-live="polite">
+    <p class="res-head">Seu perfil</p>
+
+    <div class="dial-card">
+      <svg class="dial" viewBox="0 0 250 250" role="img" aria-labelledby="tituloDial">
+        <title id="tituloDial">Distribuição do tempo entre as três esferas</title>
+        <g id="ticks"></g>
+        <g transform="rotate(-90 125 125)">
+          <circle cx="125" cy="125" r="112" fill="none" stroke="#E4E8ED" stroke-width="5"/>
+          <circle class="arc" id="refImp" cx="125" cy="125" r="112" fill="none" stroke="var(--imp)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+          <circle class="arc" id="refUrg" cx="125" cy="125" r="112" fill="none" stroke="var(--urg)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+          <circle class="arc" id="refCir" cx="125" cy="125" r="112" fill="none" stroke="var(--cir)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+
+          <circle cx="125" cy="125" r="90" fill="none" stroke="#EDF0F3" stroke-width="26"/>
+          <circle class="arc" id="arcImp" cx="125" cy="125" r="90" fill="none" stroke="var(--imp)" stroke-width="26" stroke-dasharray="0 999"/>
+          <circle class="arc" id="arcUrg" cx="125" cy="125" r="90" fill="none" stroke="var(--urg)" stroke-width="26" stroke-dasharray="0 999"/>
+          <circle class="arc" id="arcCir" cx="125" cy="125" r="90" fill="none" stroke="var(--cir)" stroke-width="26" stroke-dasharray="0 999"/>
+        </g>
+        <text class="dial-center-label" x="125" y="106" text-anchor="middle">PREDOMINANTE</text>
+        <text class="dial-center-value" id="dialValor" x="125" y="146" text-anchor="middle">0%</text>
+        <text class="dial-center-sub" id="dialNome" x="125" y="168" text-anchor="middle">—</text>
+      </svg>
+
+      <div class="bars">
+        <div class="bar-row">
+          <span class="bar-name"><span class="dot" style="background:var(--imp)"></span>Importância</span>
+          <span class="bar-pct" id="pctImp">0%</span>
+          <div class="bar-track"><div class="bar-fill" id="fillImp" style="background:var(--imp)"></div></div>
+          <div class="bar-meta"><span id="ptsImp">0 pontos</span><span>referência 70% · <span class="delta" id="dImp">—</span></span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name"><span class="dot" style="background:var(--urg)"></span>Urgência</span>
+          <span class="bar-pct" id="pctUrg">0%</span>
+          <div class="bar-track"><div class="bar-fill" id="fillUrg" style="background:var(--urg)"></div></div>
+          <div class="bar-meta"><span id="ptsUrg">0 pontos</span><span>referência 20% · <span class="delta" id="dUrg">—</span></span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name"><span class="dot" style="background:var(--cir)"></span>Circunstância</span>
+          <span class="bar-pct" id="pctCir">0%</span>
+          <div class="bar-track"><div class="bar-fill" id="fillCir" style="background:var(--cir)"></div></div>
+          <div class="bar-meta"><span id="ptsCir">0 pontos</span><span>referência 10% · <span class="delta" id="dCir">—</span></span></div>
+        </div>
+        <div class="totals">
+          <span>Total B (importância) <b id="tB">0</b></span>
+          <span>Total A (urgência) <b id="tA">0</b></span>
+          <span>Total C (circunstância) <b id="tC">0</b></span>
+          <span>Total geral <b id="tG">0</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reading" id="leitura"></div>
+
+    <div class="actions">
+      <button id="btnCopiar">Copiar resumo</button>
+      <button class="ghost" id="btnImprimir">Imprimir ou salvar em PDF</button>
+      <button class="ghost" id="btnRefazer">Refazer o teste</button>
+    </div>
+    <p class="hint" id="avisoCopia"></p>
+  </section>
+
+  <footer>
+    Questionário baseado na Tríade do Tempo, de Christian Barbosa. Os percentuais representam a distribuição dos pontos entre as esferas, não horas de agenda — servem como leitura de tendência. A referência 70 / 20 / 10 é o equilíbrio proposto pelo autor.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var ESCALA = ["Nunca","Raramente","Às vezes","Quase sempre","Sempre"];
+
+  // esfera: A = urgência (2,5,8) · B = importância (4,7,9) · C = circunstância (1,3,6)
+  var PERGUNTAS = [
+    {n:1, esfera:"C", texto:"Tenho realizado tarefas que não trazem resultados pessoais nem profissionais por comodidade, necessidade, ordens superiores ou falta de opção?"},
+    {n:2, esfera:"A", texto:"Não consigo terminar tudo o que me propus durante o dia e por isso preciso fazer hora extra ou levar trabalho para casa?"},
+    {n:3, esfera:"C", texto:"Minhas tarefas diárias sofrem muitas interrupções em razão de coisas sem importância, como e-mails, telefonemas e conversas fúteis?"},
+    {n:4, esfera:"B", texto:"Tenho dedicado muito tempo às pessoas importantes em minha vida?"},
+    {n:5, esfera:"A", texto:"Costumo resolver problemas e urgências que ocorrem inesperadamente em meu dia a dia?"},
+    {n:6, esfera:"C", texto:"Costumo aceitar facilmente as tarefas que outras pessoas me pedem?"},
+    {n:7, esfera:"B", texto:"Consigo reservar tempo para o esporte, o lazer e as atividades pessoais?"},
+    {n:8, esfera:"A", texto:"Tenho o hábito de deixar para a última hora a conclusão de muitas atividades a que me proponho?"},
+    {n:9, esfera:"B", texto:"Estabeleço metas bem específicas e passos para alcançá-las com relação aos sonhos que desejo realizar no curto, médio e longo prazo?"}
+  ];
+
+  var respostas = {};
+  var lista = document.getElementById("listaPerguntas");
+
+  PERGUNTAS.forEach(function(p){
+    var li = document.createElement("li");
+    li.className = "q";
+    li.id = "q" + p.n;
+
+    var opcoes = "";
+    for (var v = 1; v <= 5; v++){
+      opcoes +=
+        '<label class="opt">' +
+          '<input type="radio" name="p' + p.n + '" value="' + v + '" ' +
+                 'aria-label="' + v + ' — ' + ESCALA[v-1] + '">' +
+          '<span><i>' + v + '</i><small>' + ESCALA[v-1] + '</small></span>' +
+        '</label>';
+    }
+
+    li.innerHTML =
+      '<span class="num">' + String(p.n).padStart(2,"0") + '</span>' +
+      '<div>' +
+        '<p class="qtext">' + p.texto + '</p>' +
+        '<fieldset><legend>Pergunta ' + p.n + '</legend>' +
+          '<div class="opts">' + opcoes + '</div>' +
+        '</fieldset>' +
+      '</div>';
+
+    lista.appendChild(li);
+  });
+
+  var contador = document.getElementById("contador");
+  var statusTexto = document.getElementById("statusTexto");
+  var barra = document.getElementById("barraProgresso");
+  var btnCalcular = document.getElementById("btnCalcular");
+  var dica = document.getElementById("dica");
+  var resultado = document.getElementById("resultado");
+
+  lista.addEventListener("change", function(e){
+    if (e.target.type !== "radio") return;
+    var n = parseInt(e.target.name.slice(1), 10);
+    respostas[n] = parseInt(e.target.value, 10);
+    document.getElementById("q" + n).classList.add("answered");
+    atualizarProgresso();
+  });
+
+  function respondidas(){ return Object.keys(respostas).length; }
+
+  function proximaPendente(){
+    for (var i = 0; i < PERGUNTAS.length; i++){
+      if (!respostas[PERGUNTAS[i].n]) return PERGUNTAS[i].n;
+    }
+    return null;
+  }
+
+  function atualizarProgresso(){
+    var qtd = respondidas();
+    contador.textContent = qtd;
+    barra.style.width = (qtd / 9 * 100) + "%";
+    var pendente = proximaPendente();
+    if (pendente === null){
+      statusTexto.textContent = "Tudo pronto";
+      btnCalcular.disabled = false;
+      dica.textContent = "Resultado liberado.";
+    } else {
+      statusTexto.textContent = "Próxima: pergunta " + pendente;
+      btnCalcular.disabled = true;
+      dica.textContent = "Faltam " + (9 - qtd) + " de 9 para liberar o resultado.";
+    }
+  }
+
+  var C = 2 * Math.PI * 90;    // circunferência do anel interno
+  var CR = 2 * Math.PI * 112;  // circunferência do anel de referência
+
+  function desenharArco(el, inicioPct, tamanhoPct, circ){
+    var gap = tamanhoPct > 4 ? 0.9 : 0;
+    var len = Math.max(0, (tamanhoPct - gap) / 100 * circ);
+    el.setAttribute("stroke-dasharray", len + " " + (circ - len));
+    el.setAttribute("stroke-dashoffset", -(inicioPct / 100 * circ));
+  }
+
+  // marcas de 10% em 10% ao redor do mostrador
+  (function(){
+    var g = document.getElementById("ticks");
+    for (var i = 0; i < 20; i++){
+      var ang = (i * 18 - 90) * Math.PI / 180;
+      var r1 = 121, r2 = i % 5 === 0 ? 115 : 118;
+      var l = document.createElementNS("http://www.w3.org/2000/svg","line");
+      l.setAttribute("x1", 125 + r1 * Math.cos(ang));
+      l.setAttribute("y1", 125 + r1 * Math.sin(ang));
+      l.setAttribute("x2", 125 + r2 * Math.cos(ang));
+      l.setAttribute("y2", 125 + r2 * Math.sin(ang));
+      l.setAttribute("stroke", "#B4BECB");
+      l.setAttribute("stroke-width", i % 5 === 0 ? 1.4 : .8);
+      g.appendChild(l);
+    }
+  })();
+
+  function textoImportancia(p){
+    if (p >= 65) return "Sua rotina está ancorada no que realmente importa: metas com passos definidos, pessoas próximas e tempo pessoal. O trabalho aqui é proteger esse espaço quando a pressão aumentar.";
+    if (p >= 45) return "Existe base construída, mas ainda dividida com o que aparece de fora. Um bom próximo passo é bloquear na agenda, com antecedência, as tarefas importantes e não negociáveis da semana.";
+    return "O que é importante está sendo espremido pelo resto. Escolha duas metas concretas para os próximos 90 dias e reserve horário fixo para elas antes que o dia comece a ser preenchido por outros.";
+  }
+  function textoUrgencia(p){
+    if (p <= 25) return "O nível de urgência está saudável. Imprevistos acontecem, mas não comandam sua agenda.";
+    if (p <= 40) return "A urgência já ocupa espaço demais. Vale mapear quais emergências são recorrentes: urgência que se repete costuma ser importância adiada.";
+    return "Você está apagando incêndios. Boa parte disso nasce de prazos deixados para a última hora — antecipar entregas em um ou dois dias já reduz bastante essa esfera.";
+  }
+  function textoCircunstancia(p){
+    if (p <= 15) return "Pouco tempo perdido com o que não gera resultado. Seus filtros para interrupções e pedidos externos estão funcionando.";
+    if (p <= 30) return "Interrupções e pedidos de terceiros já consomem uma fatia relevante do dia. Blocos sem notificação e um \"não\" mais frequente devolvem boa parte desse tempo.";
+    return "Esta é a esfera que mais rouba seu dia: tarefas sem resultado, interrupções e demandas aceitas por reflexo. Comece questionando cada pedido novo antes de aceitá-lo.";
+  }
+
+  function delta(atual, ref, invertido){
+    var d = Math.round(atual - ref);
+    var el = { texto: (d > 0 ? "+" : "") + d + " p.p.", classe: "ok" };
+    if (d === 0) return el;
+    if (invertido) el.classe = d > 0 ? "up" : "ok";
+    else el.classe = d < 0 ? "down" : "ok";
+    return el;
+  }
+
+  function calcular(){
+    var A = 0, B = 0, Cc = 0;
+    PERGUNTAS.forEach(function(p){
+      var v = respostas[p.n];
+      if (p.esfera === "A") A += v;
+      else if (p.esfera === "B") B += v;
+      else Cc += v;
+    });
+    var G = A + B + Cc;
+    var pB = B / G * 100, pA = A / G * 100, pC = Cc / G * 100;
+
+    document.getElementById("tA").textContent = A;
+    document.getElementById("tB").textContent = B;
+    document.getElementById("tC").textContent = Cc;
+    document.getElementById("tG").textContent = G;
+
+    document.getElementById("pctImp").textContent = Math.round(pB) + "%";
+    document.getElementById("pctUrg").textContent = Math.round(pA) + "%";
+    document.getElementById("pctCir").textContent = Math.round(pC) + "%";
+    document.getElementById("ptsImp").textContent = B + " pontos";
+    document.getElementById("ptsUrg").textContent = A + " pontos";
+    document.getElementById("ptsCir").textContent = Cc + " pontos";
+
+    var dB = delta(pB, 70, false), dA = delta(pA, 20, true), dC = delta(pC, 10, true);
+    var eB = document.getElementById("dImp"), eA = document.getElementById("dUrg"), eC = document.getElementById("dCir");
+    eB.textContent = dB.texto; eB.className = "delta " + dB.classe;
+    eA.textContent = dA.texto; eA.className = "delta " + dA.classe;
+    eC.textContent = dC.texto; eC.className = "delta " + dC.classe;
+
+    resultado.hidden = false;
+
+    requestAnimationFrame(function(){
+      document.getElementById("fillImp").style.width = pB + "%";
+      document.getElementById("fillUrg").style.width = pA + "%";
+      document.getElementById("fillCir").style.width = pC + "%";
+
+      desenharArco(document.getElementById("arcImp"), 0, pB, C);
+      desenharArco(document.getElementById("arcUrg"), pB, pA, C);
+      desenharArco(document.getElementById("arcCir"), pB + pA, pC, C);
+
+      desenharArco(document.getElementById("refImp"), 0, 70, CR);
+      desenharArco(document.getElementById("refUrg"), 70, 20, CR);
+      desenharArco(document.getElementById("refCir"), 90, 10, CR);
+    });
+
+    var maior = [["Importância", pB, "var(--imp)"], ["Urgência", pA, "var(--urg)"], ["Circunstância", pC, "var(--cir)"]]
+                .sort(function(a,b){ return b[1] - a[1]; })[0];
+    document.getElementById("dialValor").textContent = Math.round(maior[1]) + "%";
+    document.getElementById("dialValor").setAttribute("fill", maior[2]);
+    document.getElementById("dialNome").textContent = maior[0];
+
+    document.getElementById("leitura").innerHTML =
+      '<div class="note imp"><h3>Importância · ' + Math.round(pB) + '%</h3><p>' + textoImportancia(pB) + '</p></div>' +
+      '<div class="note urg"><h3>Urgência · ' + Math.round(pA) + '%</h3><p>' + textoUrgencia(pA) + '</p></div>' +
+      '<div class="note cir"><h3>Circunstância · ' + Math.round(pC) + '%</h3><p>' + textoCircunstancia(pC) + '</p></div>';
+
+    window.__resumo =
+      "Tríade do Tempo — resultado\n" +
+      "Importância: " + Math.round(pB) + "% (" + B + " pts) · referência 70%\n" +
+      "Urgência: " + Math.round(pA) + "% (" + A + " pts) · referência 20%\n" +
+      "Circunstância: " + Math.round(pC) + "% (" + Cc + " pts) · referência 10%\n" +
+      "Total geral: " + G + " pontos\n" +
+      "Esfera predominante: " + maior[0] + ".";
+
+    resultado.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  btnCalcular.addEventListener("click", calcular);
+
+  document.getElementById("btnLimpar").addEventListener("click", reiniciar);
+  document.getElementById("btnRefazer").addEventListener("click", function(){
+    reiniciar();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  function reiniciar(){
+    respostas = {};
+    Array.prototype.forEach.call(lista.querySelectorAll("input"), function(i){ i.checked = false; });
+    Array.prototype.forEach.call(lista.querySelectorAll("li.q"), function(l){ l.classList.remove("answered"); });
+    resultado.hidden = true;
+    document.getElementById("avisoCopia").textContent = "";
+    atualizarProgresso();
+  }
+
+  document.getElementById("btnImprimir").addEventListener("click", function(){
+    var aviso = document.getElementById("avisoCopia");
+    var emIframe = true;
+    try { emIframe = (window.self !== window.top); } catch (e) { emIframe = true; }
+
+    var abriu = true;
+    try { window.print(); } catch (e) { abriu = false; }
+
+    if (!abriu || emIframe){
+      aviso.textContent = "Se a janela de impressão não abrir, é porque esta visualização roda dentro de um quadro protegido. Baixe o arquivo, abra no navegador e use Ctrl+P (ou Cmd+P no Mac).";
+    } else {
+      aviso.textContent = "";
+    }
+  });
+
+  document.getElementById("btnCopiar").addEventListener("click", function(){
+    var aviso = document.getElementById("avisoCopia");
+    var texto = window.__resumo || "";
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = texto;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      aviso.textContent = ok ? "Resumo copiado." : "Não foi possível copiar aqui — use Imprimir ou selecione o texto na tela.";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(texto).then(function(){
+        aviso.textContent = "Resumo copiado.";
+      }).catch(fallback);
+    } else {
+      fallback();
+    }
+  });
+
+  atualizarProgresso();
+})();
+</script>
+</body>
+</html>
