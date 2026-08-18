@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tríade do Tempo — autoavaliação</title>
+<title>Tríade do Tempo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,9 +18,6 @@
     --imp:#0F766E;
     --urg:#C2410C;
     --cir:#6D5BA6;
-    --imp-soft:#0F766E1A;
-    --urg-soft:#C2410C1A;
-    --cir-soft:#6D5BA61A;
     --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
     --body:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
@@ -28,75 +25,92 @@
 
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--body);
-    font-size:16px;
-    line-height:1.55;
-  }
-
-  .wrap{max-width:860px;margin:0 auto;padding:0 20px 80px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
 
   /* ---------- cabeçalho ---------- */
-  header{padding:56px 0 28px}
+  header{padding:56px 0 24px}
   .eyebrow{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--muted);
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-    margin:0 0 18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;
   }
   h1{
-    font-family:var(--display);
-    font-weight:700;
-    font-size:clamp(38px,7vw,62px);
-    line-height:.98;
-    letter-spacing:-.03em;
-    margin:0 0 16px;
+    font-family:var(--display);font-weight:700;font-size:clamp(36px,6.4vw,58px);
+    line-height:.98;letter-spacing:-.03em;margin:0 0 20px;
   }
   h1 em{font-style:normal;display:block;color:var(--muted)}
-  .lede{max-width:56ch;margin:0;color:#33404F}
+  .lede{max-width:58ch;margin:22px 0 0;color:#33404F}
+
+  /* ---------- abas ---------- */
+  .tabs{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--ink);border-radius:2px;overflow:hidden;background:var(--card);
+  }
+  .tab{
+    all:unset;box-sizing:border-box;cursor:pointer;
+    display:flex;flex-direction:column;gap:3px;
+    padding:14px 18px;text-align:left;
+    transition:background .18s,color .18s;
+  }
+  .tab + .tab{border-left:1px solid var(--ink)}
+  .tab b{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .tab small{font-size:12.5px;color:var(--muted);line-height:1.35}
+  .tab:hover{background:#F1F3F6}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .tab[aria-selected="true"] small{color:#B9C3CF}
+  .tab[aria-selected="true"]:hover{background:var(--ink)}
+  .tab:focus-visible{outline:2px solid var(--urg);outline-offset:-4px}
+
+  /* ---------- protocolo ---------- */
+  .protocolo{
+    margin:26px 0 0;background:var(--card);border:1px solid var(--line);
+    border-left:3px solid var(--ink);border-radius:2px;padding:20px 22px;
+  }
+  .protocolo[hidden]{display:none}
+  .protocolo h2{
+    margin:0 0 12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:600;
+  }
+  .protocolo ol{margin:0;padding:0;list-style:none;counter-reset:passo;display:grid;gap:9px}
+  .protocolo li{
+    counter-increment:passo;display:grid;grid-template-columns:26px 1fr;gap:10px;
+    font-size:14.5px;color:#33404F;
+  }
+  .protocolo li::before{
+    content:counter(passo);font-family:var(--mono);font-size:11px;font-weight:600;
+    color:var(--muted);padding-top:3px;
+  }
+
+  /* ---------- identificação ---------- */
+  .meta{display:flex;gap:26px;flex-wrap:wrap;margin:24px 0 0}
+  .meta[hidden]{display:none}
+  .campo{display:flex;flex-direction:column;gap:4px;flex:1 1 220px}
+  .campo label{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .campo input{
+    font-family:var(--body);font-size:15px;color:var(--ink);
+    background:transparent;border:0;border-bottom:1px solid var(--line-strong);padding:7px 2px;
+  }
+  .campo input:focus{outline:0;border-bottom-color:var(--ink);border-bottom-width:2px}
 
   /* ---------- escala ---------- */
   .scale{
-    margin:26px 0 0;
-    border-top:1px solid var(--line-strong);
-    border-bottom:1px solid var(--line-strong);
-    padding:12px 0;
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px 22px;
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--muted);
+    margin:26px 0 0;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
+    padding:12px 0;display:flex;flex-wrap:wrap;gap:6px 22px;
+    font-family:var(--mono);font-size:12px;color:var(--muted);
   }
   .scale b{color:var(--ink);font-weight:600}
 
   /* ---------- progresso ---------- */
   .progress{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:var(--bg);
-    padding:12px 0 10px;
-    border-bottom:1px solid var(--line);
-    margin-bottom:8px;
+    position:sticky;top:0;z-index:20;background:var(--bg);
+    padding:12px 0 10px;border-bottom:1px solid var(--line);margin-bottom:8px;
   }
   .progress-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    font-family:var(--mono);
-    font-size:12px;
-    letter-spacing:.04em;
-    color:var(--muted);
-    margin-bottom:8px;
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);margin-bottom:8px;
   }
   .progress-row strong{color:var(--ink);font-weight:600}
   .track{height:3px;background:var(--line-strong);position:relative;overflow:hidden}
@@ -105,105 +119,65 @@
   /* ---------- perguntas ---------- */
   ol.questions{list-style:none;margin:0;padding:0}
   li.q{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:22px 22px 18px;
-    margin:12px 0;
-    display:grid;
-    grid-template-columns:44px 1fr;
-    gap:0 4px;
-    transition:border-color .2s, box-shadow .2s;
+    background:var(--card);border:1px solid var(--line);border-radius:2px;
+    padding:22px 22px 18px;margin:12px 0;display:grid;grid-template-columns:44px 1fr;gap:0 4px;
+    transition:border-color .2s,box-shadow .2s;
   }
   li.q.answered{border-color:var(--line-strong);box-shadow:inset 3px 0 0 var(--ink)}
-  .num{
-    font-family:var(--mono);
-    font-size:12px;
-    font-weight:600;
-    color:var(--muted);
-    padding-top:3px;
-  }
+  li.q.divergente{box-shadow:inset 3px 0 0 var(--urg)}
+  .num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted);padding-top:3px}
   li.q.answered .num{color:var(--ink)}
-  .qtext{margin:0 0 16px;font-size:16.5px;line-height:1.45}
+  .qtext{margin:0 0 6px;font-size:16.5px;line-height:1.45}
+  .qajuda{margin:0 0 16px;font-size:13px;color:var(--muted);max-width:60ch}
+  .qtext:last-of-type{margin-bottom:16px}
   fieldset{border:0;margin:0;padding:0;grid-column:2}
   legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .opts{display:flex;gap:8px;flex-wrap:wrap}
   .opt{position:relative;cursor:pointer}
   .opt input{position:absolute;opacity:0;width:0;height:0}
   .opt span{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-width:64px;
-    padding:8px 10px;
-    border:1px solid var(--line-strong);
-    border-radius:2px;
-    background:#fff;
-    transition:background .15s,border-color .15s,color .15s,transform .1s;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-width:64px;padding:8px 10px;border:1px solid var(--line-strong);border-radius:2px;
+    background:#fff;transition:background .15s,border-color .15s,color .15s,transform .1s;
   }
-  .opt span i{
-    font-family:var(--mono);
-    font-style:normal;
-    font-size:17px;
-    font-weight:600;
-    line-height:1.2;
-  }
-  .opt span small{
-    font-size:10px;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-top:2px;
-  }
+  .opt span i{font-family:var(--mono);font-style:normal;font-size:17px;font-weight:600;line-height:1.2}
+  .opt span small{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
   .opt:hover span{border-color:var(--ink);transform:translateY(-1px)}
   .opt input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff}
   .opt input:checked + span small{color:#B9C3CF}
   .opt input:focus-visible + span{outline:2px solid var(--urg);outline-offset:2px}
 
+  .flag{
+    display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;cursor:pointer;
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--muted);
+  }
+  .flag input{width:15px;height:15px;accent-color:var(--urg);cursor:pointer;margin:0}
+  .flag:hover{color:var(--ink)}
+  li.q.divergente .flag{color:var(--urg)}
+
   /* ---------- ações ---------- */
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0}
-  button{
-    font-family:var(--body);
-    font-size:14px;
-    font-weight:600;
-    padding:12px 20px;
-    border-radius:2px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:#fff;
-    cursor:pointer;
+  button.btn{
+    font-family:var(--body);font-size:14px;font-weight:600;padding:12px 20px;border-radius:2px;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;
     transition:opacity .15s,background .15s,color .15s;
   }
-  button.ghost{background:transparent;color:var(--ink)}
-  button.ghost:hover{background:var(--ink);color:#fff}
-  button:disabled{opacity:.35;cursor:not-allowed}
-  button:focus-visible{outline:2px solid var(--urg);outline-offset:2px}
+  button.btn.ghost{background:transparent;color:var(--ink)}
+  button.btn.ghost:hover{background:var(--ink);color:#fff}
+  button.btn:disabled{opacity:.35;cursor:not-allowed}
+  button.btn:focus-visible{outline:2px solid var(--urg);outline-offset:2px}
   .hint{font-family:var(--mono);font-size:12px;color:var(--muted);margin:12px 0 0}
 
   /* ---------- resultado ---------- */
   #resultado[hidden]{display:none}
   #resultado{margin-top:44px;scroll-margin-top:80px}
   .res-head{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--muted);
-    border-bottom:1px solid var(--line-strong);
-    padding-bottom:10px;
-    margin-bottom:24px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);border-bottom:1px solid var(--line-strong);padding-bottom:10px;margin-bottom:24px;
   }
   .dial-card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:32px 24px;
-    display:flex;
-    gap:36px;
-    align-items:center;
-    flex-wrap:wrap;
-    justify-content:center;
+    background:var(--card);border:1px solid var(--line);border-radius:2px;padding:32px 24px;
+    display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;
   }
   .dial{width:250px;height:250px;flex:0 0 auto}
   .arc{transition:stroke-dasharray .8s cubic-bezier(.2,.7,.3,1),stroke-dashoffset .8s cubic-bezier(.2,.7,.3,1)}
@@ -226,49 +200,37 @@
 
   .reading{margin-top:12px;display:grid;gap:12px}
   .note{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-left:3px solid var(--ink);
-    border-radius:2px;
-    padding:16px 18px;
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);
+    border-radius:2px;padding:16px 18px;
   }
   .note h3{
-    margin:0 0 6px;
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    font-weight:600;
+    margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:600;
   }
   .note p{margin:0;font-size:14.5px;color:#33404F}
+  .note p + p{margin-top:8px}
+  .note .acao{font-size:13.5px;color:var(--muted)}
+  .note .acao b{color:var(--ink);font-weight:600}
   .note.imp{border-left-color:var(--imp)} .note.imp h3{color:var(--imp)}
   .note.urg{border-left-color:var(--urg)} .note.urg h3{color:var(--urg)}
   .note.cir{border-left-color:var(--cir)} .note.cir h3{color:var(--cir)}
+  .note.div{border-left-color:var(--ink)}
 
   .totals{
-    margin-top:12px;
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--muted);
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    border-top:1px solid var(--line-strong);
-    padding-top:12px;
+    margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--muted);
+    display:flex;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line-strong);padding-top:12px;
   }
   .totals b{color:var(--ink);font-weight:600}
 
   footer{
-    margin-top:56px;
-    padding-top:20px;
-    border-top:1px solid var(--line-strong);
-    font-size:12.5px;
-    color:var(--muted);
-    max-width:62ch;
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line-strong);
+    font-size:12.5px;color:var(--muted);max-width:64ch;
   }
 
   @media (max-width:640px){
     header{padding:36px 0 20px}
+    .tabs{grid-template-columns:1fr}
+    .tab + .tab{border-left:0;border-top:1px solid var(--ink)}
     li.q{grid-template-columns:1fr;padding:18px 16px 16px}
     .num{padding:0 0 6px}
     fieldset{grid-column:1}
@@ -284,7 +246,7 @@
 
   @media print{
     body{background:#fff}
-    .progress,.actions,.hint{display:none}
+    .progress,.actions,.hint,.protocolo,.tabs{display:none}
     li.q,.dial-card,.note{break-inside:avoid;border-color:#999}
   }
 </style>
@@ -293,9 +255,44 @@
 <div class="wrap">
 
   <header>
-    <p class="eyebrow"><span>Autoavaliação</span><span>9 perguntas</span><span>≈ 2 minutos</span></p>
-    <h1>Tríade do Tempo<em>onde seu tempo está indo</em></h1>
-    <p class="lede">Responda pensando nas últimas semanas, não no dia ideal. A soma dos pontos é distribuída entre as três esferas — importância, urgência e circunstância — e o cálculo é feito automaticamente ao final.</p>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1>Tríade do Tempo<em id="subtitulo"></em></h1>
+
+    <div class="tabs" role="tablist" aria-label="Formato do diagnóstico">
+      <button class="tab" id="tab-pessoal" role="tab" aria-selected="true" aria-controls="painel" data-modo="pessoal">
+        <b>Pessoal</b>
+        <small>uma pessoa avaliando a própria rotina</small>
+      </button>
+      <button class="tab" id="tab-time" role="tab" aria-selected="false" aria-controls="painel" tabindex="-1" data-modo="time">
+        <b>Time</b>
+        <small>time de desenvolvimento respondendo em conjunto</small>
+      </button>
+    </div>
+
+    <p class="lede" id="lede"></p>
+
+    <div class="protocolo" id="protocolo" hidden>
+      <h2>Como conduzir</h2>
+      <ol>
+        <li>Cada pessoa escreve sua nota de 1 a 5 em silêncio, sem mostrar aos outros. Isso evita que a primeira voz ancore o grupo.</li>
+        <li>Todos revelam ao mesmo tempo. Onde as notas batem, registre e siga.</li>
+        <li>Onde houver distância de dois pontos ou mais, ouça primeiro quem deu a nota mais alta e quem deu a mais baixa. A conversa vale mais que o número.</li>
+        <li>Registre a nota acordada e marque a caixa de divergência quando o time não chegou a um consenso confortável.</li>
+        <li>Leia o resultado junto e escolha no máximo duas ações para a próxima sprint. Guarde o resumo para comparar daqui a um trimestre.</li>
+      </ol>
+    </div>
+
+    <div class="meta" id="meta" hidden>
+      <div class="campo">
+        <label for="nomeTime">Time</label>
+        <input type="text" id="nomeTime" placeholder="Ex.: Squad Pagamentos" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="dataSessao">Data da sessão</label>
+        <input type="text" id="dataSessao" placeholder="Ex.: 17/08/2026" autocomplete="off">
+      </div>
+    </div>
+
     <div class="scale">
       <span><b>1</b> Nunca</span>
       <span><b>2</b> Raramente</span>
@@ -305,85 +302,89 @@
     </div>
   </header>
 
-  <div class="progress">
-    <div class="progress-row">
-      <span><strong id="contador">0</strong> de 9 respondidas</span>
-      <span id="statusTexto">Comece pela pergunta 1</span>
-    </div>
-    <div class="track"><div class="fill" id="barraProgresso"></div></div>
-  </div>
+  <div id="painel" role="tabpanel" aria-labelledby="tab-pessoal">
 
-  <ol class="questions" id="listaPerguntas"></ol>
-
-  <div class="actions">
-    <button id="btnCalcular" disabled>Ver resultado</button>
-    <button class="ghost" id="btnLimpar">Limpar respostas</button>
-  </div>
-  <p class="hint" id="dica">Responda as 9 perguntas para liberar o resultado.</p>
-
-  <section id="resultado" hidden aria-live="polite">
-    <p class="res-head">Seu perfil</p>
-
-    <div class="dial-card">
-      <svg class="dial" viewBox="0 0 250 250" role="img" aria-labelledby="tituloDial">
-        <title id="tituloDial">Distribuição do tempo entre as três esferas</title>
-        <g id="ticks"></g>
-        <g transform="rotate(-90 125 125)">
-          <circle cx="125" cy="125" r="112" fill="none" stroke="#E4E8ED" stroke-width="5"/>
-          <circle class="arc" id="refImp" cx="125" cy="125" r="112" fill="none" stroke="var(--imp)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
-          <circle class="arc" id="refUrg" cx="125" cy="125" r="112" fill="none" stroke="var(--urg)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
-          <circle class="arc" id="refCir" cx="125" cy="125" r="112" fill="none" stroke="var(--cir)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
-
-          <circle cx="125" cy="125" r="90" fill="none" stroke="#EDF0F3" stroke-width="26"/>
-          <circle class="arc" id="arcImp" cx="125" cy="125" r="90" fill="none" stroke="var(--imp)" stroke-width="26" stroke-dasharray="0 999"/>
-          <circle class="arc" id="arcUrg" cx="125" cy="125" r="90" fill="none" stroke="var(--urg)" stroke-width="26" stroke-dasharray="0 999"/>
-          <circle class="arc" id="arcCir" cx="125" cy="125" r="90" fill="none" stroke="var(--cir)" stroke-width="26" stroke-dasharray="0 999"/>
-        </g>
-        <text class="dial-center-label" x="125" y="106" text-anchor="middle">PREDOMINANTE</text>
-        <text class="dial-center-value" id="dialValor" x="125" y="146" text-anchor="middle">0%</text>
-        <text class="dial-center-sub" id="dialNome" x="125" y="168" text-anchor="middle">—</text>
-      </svg>
-
-      <div class="bars">
-        <div class="bar-row">
-          <span class="bar-name"><span class="dot" style="background:var(--imp)"></span>Importância</span>
-          <span class="bar-pct" id="pctImp">0%</span>
-          <div class="bar-track"><div class="bar-fill" id="fillImp" style="background:var(--imp)"></div></div>
-          <div class="bar-meta"><span id="ptsImp">0 pontos</span><span>referência 70% · <span class="delta" id="dImp">—</span></span></div>
-        </div>
-        <div class="bar-row">
-          <span class="bar-name"><span class="dot" style="background:var(--urg)"></span>Urgência</span>
-          <span class="bar-pct" id="pctUrg">0%</span>
-          <div class="bar-track"><div class="bar-fill" id="fillUrg" style="background:var(--urg)"></div></div>
-          <div class="bar-meta"><span id="ptsUrg">0 pontos</span><span>referência 20% · <span class="delta" id="dUrg">—</span></span></div>
-        </div>
-        <div class="bar-row">
-          <span class="bar-name"><span class="dot" style="background:var(--cir)"></span>Circunstância</span>
-          <span class="bar-pct" id="pctCir">0%</span>
-          <div class="bar-track"><div class="bar-fill" id="fillCir" style="background:var(--cir)"></div></div>
-          <div class="bar-meta"><span id="ptsCir">0 pontos</span><span>referência 10% · <span class="delta" id="dCir">—</span></span></div>
-        </div>
-        <div class="totals">
-          <span>Total B (importância) <b id="tB">0</b></span>
-          <span>Total A (urgência) <b id="tA">0</b></span>
-          <span>Total C (circunstância) <b id="tC">0</b></span>
-          <span>Total geral <b id="tG">0</b></span>
-        </div>
+    <div class="progress">
+      <div class="progress-row">
+        <span><strong id="contador">0</strong> <span id="rotuloContagem">de 9 respondidas</span></span>
+        <span id="statusTexto">Comece pela pergunta 1</span>
       </div>
+      <div class="track"><div class="fill" id="barraProgresso"></div></div>
     </div>
 
-    <div class="reading" id="leitura"></div>
+    <ol class="questions" id="listaPerguntas"></ol>
 
     <div class="actions">
-      <button id="btnCopiar">Copiar resumo</button>
-      <button class="ghost" id="btnImprimir">Imprimir ou salvar em PDF</button>
-      <button class="ghost" id="btnRefazer">Refazer o teste</button>
+      <button class="btn" id="btnCalcular" disabled>Ver resultado</button>
+      <button class="btn ghost" id="btnLimpar">Limpar respostas</button>
     </div>
-    <p class="hint" id="avisoCopia"></p>
-  </section>
+    <p class="hint" id="dica"></p>
+
+    <section id="resultado" hidden aria-live="polite">
+      <p class="res-head" id="cabecalhoResultado">Seu perfil</p>
+
+      <div class="dial-card">
+        <svg class="dial" viewBox="0 0 250 250" role="img" aria-labelledby="tituloDial">
+          <title id="tituloDial">Distribuição do tempo entre as três esferas</title>
+          <g id="ticks"></g>
+          <g transform="rotate(-90 125 125)">
+            <circle cx="125" cy="125" r="112" fill="none" stroke="#E4E8ED" stroke-width="5"/>
+            <circle class="arc" id="refImp" cx="125" cy="125" r="112" fill="none" stroke="var(--imp)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+            <circle class="arc" id="refUrg" cx="125" cy="125" r="112" fill="none" stroke="var(--urg)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+            <circle class="arc" id="refCir" cx="125" cy="125" r="112" fill="none" stroke="var(--cir)" stroke-width="5" stroke-opacity=".35" stroke-dasharray="0 999"/>
+
+            <circle cx="125" cy="125" r="90" fill="none" stroke="#EDF0F3" stroke-width="26"/>
+            <circle class="arc" id="arcImp" cx="125" cy="125" r="90" fill="none" stroke="var(--imp)" stroke-width="26" stroke-dasharray="0 999"/>
+            <circle class="arc" id="arcUrg" cx="125" cy="125" r="90" fill="none" stroke="var(--urg)" stroke-width="26" stroke-dasharray="0 999"/>
+            <circle class="arc" id="arcCir" cx="125" cy="125" r="90" fill="none" stroke="var(--cir)" stroke-width="26" stroke-dasharray="0 999"/>
+          </g>
+          <text class="dial-center-label" x="125" y="106" text-anchor="middle">PREDOMINANTE</text>
+          <text class="dial-center-value" id="dialValor" x="125" y="146" text-anchor="middle">0%</text>
+          <text class="dial-center-sub" id="dialNome" x="125" y="168" text-anchor="middle">—</text>
+        </svg>
+
+        <div class="bars">
+          <div class="bar-row">
+            <span class="bar-name"><span class="dot" style="background:var(--imp)"></span><span id="nomeImp">Importância</span></span>
+            <span class="bar-pct" id="pctImp">0%</span>
+            <div class="bar-track"><div class="bar-fill" id="fillImp" style="background:var(--imp)"></div></div>
+            <div class="bar-meta"><span id="ptsImp">0 pontos</span><span>referência 70% · <span class="delta" id="dImp">—</span></span></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name"><span class="dot" style="background:var(--urg)"></span><span id="nomeUrg">Urgência</span></span>
+            <span class="bar-pct" id="pctUrg">0%</span>
+            <div class="bar-track"><div class="bar-fill" id="fillUrg" style="background:var(--urg)"></div></div>
+            <div class="bar-meta"><span id="ptsUrg">0 pontos</span><span>referência 20% · <span class="delta" id="dUrg">—</span></span></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name"><span class="dot" style="background:var(--cir)"></span><span id="nomeCir">Circunstância</span></span>
+            <span class="bar-pct" id="pctCir">0%</span>
+            <div class="bar-track"><div class="bar-fill" id="fillCir" style="background:var(--cir)"></div></div>
+            <div class="bar-meta"><span id="ptsCir">0 pontos</span><span>referência 10% · <span class="delta" id="dCir">—</span></span></div>
+          </div>
+          <div class="totals">
+            <span>Total B (importância) <b id="tB">0</b></span>
+            <span>Total A (urgência) <b id="tA">0</b></span>
+            <span>Total C (circunstância) <b id="tC">0</b></span>
+            <span>Total geral <b id="tG">0</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reading" id="leitura"></div>
+
+      <div class="actions">
+        <button class="btn" id="btnCopiar">Copiar resumo</button>
+        <button class="btn ghost" id="btnImprimir">Imprimir ou salvar em PDF</button>
+        <button class="btn ghost" id="btnRefazer">Refazer</button>
+      </div>
+      <p class="hint" id="avisoCopia"></p>
+    </section>
+
+  </div>
 
   <footer>
-    Questionário baseado na Tríade do Tempo, de Christian Barbosa. Os percentuais representam a distribuição dos pontos entre as esferas, não horas de agenda — servem como leitura de tendência. A referência 70 / 20 / 10 é o equilíbrio proposto pelo autor.
+    Questionário baseado na Tríade do Tempo, de Christian Barbosa; a versão de time é uma adaptação para o contexto de desenvolvimento de software. Os percentuais mostram a distribuição dos pontos entre as esferas — são leitura de tendência, não medição de horas. A referência 70 / 20 / 10 é o equilíbrio proposto pelo autor; como cada esfera tem piso de 3 pontos, o mínimo possível em qualquer uma delas fica em torno de 14%. Nada é enviado para servidor: as respostas ficam no navegador e desaparecem ao fechar a aba.
   </footer>
 </div>
 
@@ -393,70 +394,251 @@
 
   var ESCALA = ["Nunca","Raramente","Às vezes","Quase sempre","Sempre"];
 
-  // esfera: A = urgência (2,5,8) · B = importância (4,7,9) · C = circunstância (1,3,6)
-  var PERGUNTAS = [
-    {n:1, esfera:"C", texto:"Tenho realizado tarefas que não trazem resultados pessoais nem profissionais por comodidade, necessidade, ordens superiores ou falta de opção?"},
-    {n:2, esfera:"A", texto:"Não consigo terminar tudo o que me propus durante o dia e por isso preciso fazer hora extra ou levar trabalho para casa?"},
-    {n:3, esfera:"C", texto:"Minhas tarefas diárias sofrem muitas interrupções em razão de coisas sem importância, como e-mails, telefonemas e conversas fúteis?"},
-    {n:4, esfera:"B", texto:"Tenho dedicado muito tempo às pessoas importantes em minha vida?"},
-    {n:5, esfera:"A", texto:"Costumo resolver problemas e urgências que ocorrem inesperadamente em meu dia a dia?"},
-    {n:6, esfera:"C", texto:"Costumo aceitar facilmente as tarefas que outras pessoas me pedem?"},
-    {n:7, esfera:"B", texto:"Consigo reservar tempo para o esporte, o lazer e as atividades pessoais?"},
-    {n:8, esfera:"A", texto:"Tenho o hábito de deixar para a última hora a conclusão de muitas atividades a que me proponho?"},
-    {n:9, esfera:"B", texto:"Estabeleço metas bem específicas e passos para alcançá-las com relação aos sonhos que desejo realizar no curto, médio e longo prazo?"}
-  ];
+  /* ---------------- conteúdo dos dois modos ---------------- */
 
-  var respostas = {};
-  var lista = document.getElementById("listaPerguntas");
+  var MODOS = {
 
-  PERGUNTAS.forEach(function(p){
-    var li = document.createElement("li");
-    li.className = "q";
-    li.id = "q" + p.n;
+    pessoal: {
+      eyebrow: ["Autoavaliação","9 perguntas","≈ 2 minutos"],
+      subtitulo: "onde seu tempo está indo",
+      lede: "Responda pensando nas últimas semanas, não no dia ideal. A soma dos pontos é distribuída entre as três esferas — importância, urgência e circunstância — e o cálculo é feito automaticamente ao final.",
+      protocolo: false,
+      meta: false,
+      divergencia: false,
+      rotuloContagem: "de 9 respondidas",
+      dicaInicial: "Responda as 9 perguntas para liberar o resultado.",
+      textoCalcular: "Ver resultado",
+      cabecalho: "Seu perfil",
+      nomes: { imp:"Importância", urg:"Urgência", cir:"Circunstância" },
+      tituloResumo: "Tríade do Tempo — resultado individual",
+      perguntas: [
+        {n:1, esfera:"C", texto:"Tenho realizado tarefas que não trazem resultados pessoais nem profissionais por comodidade, necessidade, ordens superiores ou falta de opção?"},
+        {n:2, esfera:"A", texto:"Não consigo terminar tudo o que me propus durante o dia e por isso preciso fazer hora extra ou levar trabalho para casa?"},
+        {n:3, esfera:"C", texto:"Minhas tarefas diárias sofrem muitas interrupções em razão de coisas sem importância, como e-mails, telefonemas e conversas fúteis?"},
+        {n:4, esfera:"B", texto:"Tenho dedicado muito tempo às pessoas importantes em minha vida?"},
+        {n:5, esfera:"A", texto:"Costumo resolver problemas e urgências que ocorrem inesperadamente em meu dia a dia?"},
+        {n:6, esfera:"C", texto:"Costumo aceitar facilmente as tarefas que outras pessoas me pedem?"},
+        {n:7, esfera:"B", texto:"Consigo reservar tempo para o esporte, o lazer e as atividades pessoais?"},
+        {n:8, esfera:"A", texto:"Tenho o hábito de deixar para a última hora a conclusão de muitas atividades a que me proponho?"},
+        {n:9, esfera:"B", texto:"Estabeleço metas bem específicas e passos para alcançá-las com relação aos sonhos que desejo realizar no curto, médio e longo prazo?"}
+      ],
+      leitura: {
+        imp: function(p){
+          if (p >= 60) return {d:"Sua rotina está ancorada no que realmente importa: metas com passos definidos, pessoas próximas e tempo pessoal. O trabalho aqui é proteger esse espaço quando a pressão aumentar.", a:"Proteja: trate os compromissos com você mesmo com a mesma seriedade dos compromissos com os outros."};
+          if (p >= 45) return {d:"Existe base construída, mas ainda dividida com o que aparece de fora. É o perfil de quem planeja bem e é atropelado no meio do caminho.", a:"Experimente: bloquear na agenda, com antecedência, as tarefas importantes e não negociáveis da semana."};
+          return {d:"O que é importante está sendo espremido pelo resto. Você resolve o dia, mas o mês não anda.", a:"Comece por: escolher duas metas concretas para os próximos 90 dias e reservar horário fixo para elas antes que o dia seja preenchido por outros."};
+        },
+        urg: function(p){
+          if (p <= 25) return {d:"O nível de urgência está saudável. Imprevistos acontecem, mas não comandam sua agenda.", a:"Mantenha: a folga que você deixa na agenda é o que absorve o imprevisto sem virar noite."};
+          if (p <= 40) return {d:"A urgência já ocupa espaço demais. Vale separar o imprevisto genuíno do prazo mal dimensionado — são problemas diferentes.", a:"Investigue: liste as urgências das últimas duas semanas. As que se repetem são importância adiada."};
+          return {d:"Você está apagando incêndios. Boa parte disso nasce de entregas deixadas para a última hora.", a:"Comece por: antecipar em um ou dois dias os prazos que dependem só de você."};
+        },
+        cir: function(p){
+          if (p <= 16) return {d:"Pouco tempo perdido com o que não gera resultado. Seus filtros para interrupções e pedidos estão funcionando.", a:"Mantenha: revise de tempos em tempos o que entrou na rotina por hábito e nunca mais foi questionado."};
+          if (p <= 30) return {d:"Interrupções e pedidos de terceiros já consomem uma fatia relevante do dia.", a:"Experimente: dois blocos diários sem notificação, e responder mensagens em janelas definidas em vez de conforme chegam."};
+          return {d:"Esta é a esfera que mais rouba seu dia: tarefas sem resultado, interrupção constante e demandas aceitas por reflexo. É também a que dá o ganho mais rápido.", a:"Comece por: adiar a resposta a todo pedido novo em algumas horas. A pausa transforma o sim automático em escolha."};
+        }
+      }
+    },
 
-    var opcoes = "";
-    for (var v = 1; v <= 5; v++){
-      opcoes +=
-        '<label class="opt">' +
-          '<input type="radio" name="p' + p.n + '" value="' + v + '" ' +
-                 'aria-label="' + v + ' — ' + ESCALA[v-1] + '">' +
-          '<span><i>' + v + '</i><small>' + ESCALA[v-1] + '</small></span>' +
-        '</label>';
+    time: {
+      eyebrow: ["Diagnóstico de time","9 perguntas","≈ 40 minutos"],
+      subtitulo: "como o time gasta a semana",
+      lede: "A mesma lógica do exercício individual, reescrita para o dia a dia de um time de desenvolvimento. As perguntas são respondidas em conjunto: uma nota por pergunta, acordada pelo time, olhando as últimas quatro a seis semanas de trabalho real — não a sprint ideal.",
+      protocolo: true,
+      meta: true,
+      divergencia: true,
+      rotuloContagem: "de 9 acordadas",
+      dicaInicial: "Registre as 9 notas acordadas para liberar o resultado.",
+      textoCalcular: "Ver resultado do time",
+      cabecalho: "Perfil do time",
+      nomes: {
+        imp:"Importância · produto e capacidade",
+        urg:"Urgência · incidentes e prazos",
+        cir:"Circunstância · ruído e desvio"
+      },
+      tituloResumo: "Tríade do Tempo — time de desenvolvimento",
+      perguntas: [
+        {n:1, esfera:"C", texto:"O time executa tarefas que não geram valor claro para o produto nem para quem usa — mantidas por hábito, processo antigo ou pedido de cima?", ajuda:"Relatórios que ninguém lê, rituais que perderam o propósito, retrabalho de decisão já tomada."},
+        {n:2, esfera:"A", texto:"O time deixa de concluir o que planejou e, por isso, estende prazos, avança noite adentro ou empurra itens para a sprint seguinte?", ajuda:"Olhe o histórico real de carry over das últimas sprints, não a impressão geral."},
+        {n:3, esfera:"C", texto:"O trabalho é interrompido com frequência por mensagens, reuniões sem pauta e pedidos que chegam fora do fluxo?", ajuda:"Vale contar as interrupções que quebram um bloco de foco, venham de onde vierem."},
+        {n:4, esfera:"B", texto:"O time dedica tempo consistente ao que sustenta o produto no longo prazo — testes, refatoração, observabilidade, redução de dívida técnica?", ajuda:"Tempo que entra no plano da sprint, não o que sobra quando dá."},
+        {n:5, esfera:"A", texto:"O time gasta parte relevante do dia resolvendo incidentes, bugs em produção e chamados inesperados?", ajuda:"Inclua plantão, suporte de segundo nível e correções que furam a fila."},
+        {n:6, esfera:"C", texto:"O time aceita com facilidade demandas que chegam por fora do backlog, sem passar por priorização?", ajuda:"Pedidos diretos de outra área, favores rápidos, \"só um ajustezinho\"."},
+        {n:7, esfera:"B", texto:"O time consegue reservar tempo para aprendizado, experimentação e melhoria do próprio processo?", ajuda:"Spikes, estudo, automação de tarefa repetitiva, ações de retrospectiva que de fato acontecem."},
+        {n:8, esfera:"A", texto:"Integração, testes e deploy ficam concentrados nos últimos dias da sprint?", ajuda:"Se as entregas se acumulam no fim, boa parte da urgência é fabricada pelo próprio fluxo."},
+        {n:9, esfera:"B", texto:"O time trabalha com metas claras de sprint e de trimestre, com passos definidos e critério de pronto acordado?", ajuda:"Qualquer pessoa do time saberia dizer, agora, qual é o objetivo da sprint atual."}
+      ],
+      leitura: {
+        imp: function(p){
+          if (p >= 60) return {d:"O time reserva espaço real para o que sustenta o produto: qualidade técnica, aprendizado e metas com critério de pronto. Esse é o ativo mais fácil de perder quando a pressão sobe.", a:"Proteja: trate o tempo de dívida técnica e aprendizado como escopo comprometido da sprint, não como colchão a ser sacrificado."};
+          if (p >= 45) return {d:"Existe base construída, mas ela divide espaço com o que chega de fora. Costuma ser o time que planeja bem e é atropelado no meio do caminho.", a:"Experimente: reservar uma fatia fixa da capacidade da sprint (entre 15% e 20%) para qualidade técnica, e defender essa fatia no planning."};
+          return {d:"O que sustenta o produto está sendo espremido. Times nesse ponto entregam no curto prazo e pagam a conta em incidentes e retrabalho alguns meses depois.", a:"Comece por: escolher um único item de dívida técnica com impacto mensurável e colocá-lo na próxima sprint com dono e critério de pronto."};
+        },
+        urg: function(p){
+          if (p <= 25) return {d:"Nível saudável. Imprevistos acontecem, mas não definem a semana do time.", a:"Mantenha: acompanhe a taxa de trabalho não planejado por sprint para perceber cedo qualquer subida."};
+          if (p <= 40) return {d:"A urgência já ocupa espaço demais. Vale separar o que é imprevisto genuíno do que é prazo mal dimensionado — são problemas diferentes com soluções diferentes.", a:"Investigue: classifique os incidentes das últimas quatro sprints por causa raiz. Urgência que se repete quase sempre é importância adiada."};
+          return {d:"O time está apagando incêndios. Parte disso nasce do próprio fluxo: integrar e implantar tudo no fim da sprint fabrica urgência que não existia.", a:"Ataque primeiro: entregas menores e mais frequentes, e um limite de trabalho em progresso. Reduzir o lote costuma derrubar essa esfera mais rápido que qualquer processo novo."};
+        },
+        cir: function(p){
+          if (p <= 16) return {d:"Pouco desvio. Os filtros do time para interrupções e pedidos externos estão funcionando.", a:"Mantenha: quem hoje segura os pedidos de fora precisa ter substituto nas férias, senão o filtro cai junto."};
+          if (p <= 30) return {d:"Interrupções e pedidos fora do backlog já consomem uma fatia relevante da semana. Normalmente é o custo de não ter uma porta de entrada única.", a:"Experimente: uma pessoa de plantão por sprint recebendo todos os pedidos externos, liberando o resto do time para blocos de foco."};
+          return {d:"Esta é a esfera que mais rouba a semana do time: tarefas sem valor claro, interrupção constante e demandas aceitas por reflexo. É também a que dá o ganho mais rápido quando enfrentada.", a:"Comece por: registrar por duas semanas tudo que entrou fora do backlog, com quem pediu e quanto custou. O dado torna a conversa com as outras áreas possível."};
+        }
+      }
     }
+  };
 
-    li.innerHTML =
-      '<span class="num">' + String(p.n).padStart(2,"0") + '</span>' +
-      '<div>' +
-        '<p class="qtext">' + p.texto + '</p>' +
-        '<fieldset><legend>Pergunta ' + p.n + '</legend>' +
-          '<div class="opts">' + opcoes + '</div>' +
-        '</fieldset>' +
-      '</div>';
+  /* ---------------- estado ---------------- */
 
-    lista.appendChild(li);
+  var modoAtual = "pessoal";
+  var estado = {
+    pessoal: { respostas:{}, divergencias:{} },
+    time:    { respostas:{}, divergencias:{} }
+  };
+
+  function cfg(){ return MODOS[modoAtual]; }
+  function dados(){ return estado[modoAtual]; }
+
+  /* ---------------- elementos ---------------- */
+
+  var lista        = document.getElementById("listaPerguntas");
+  var contador     = document.getElementById("contador");
+  var rotuloCont   = document.getElementById("rotuloContagem");
+  var statusTexto  = document.getElementById("statusTexto");
+  var barra        = document.getElementById("barraProgresso");
+  var btnCalcular  = document.getElementById("btnCalcular");
+  var dica         = document.getElementById("dica");
+  var resultado    = document.getElementById("resultado");
+  var painel       = document.getElementById("painel");
+  var abas         = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+
+  /* ---------------- montagem ---------------- */
+
+  function montarPerguntas(){
+    var c = cfg();
+    lista.innerHTML = "";
+
+    c.perguntas.forEach(function(p){
+      var li = document.createElement("li");
+      li.className = "q";
+      li.id = "q" + p.n;
+
+      var opcoes = "";
+      for (var v = 1; v <= 5; v++){
+        opcoes +=
+          '<label class="opt">' +
+            '<input type="radio" name="p' + p.n + '" value="' + v + '" aria-label="' + v + ' — ' + ESCALA[v-1] + '">' +
+            '<span><i>' + v + '</i><small>' + ESCALA[v-1] + '</small></span>' +
+          '</label>';
+      }
+
+      li.innerHTML =
+        '<span class="num">' + String(p.n).padStart(2,"0") + '</span>' +
+        '<div>' +
+          '<p class="qtext">' + p.texto + '</p>' +
+          (p.ajuda ? '<p class="qajuda">' + p.ajuda + '</p>' : '') +
+          '<fieldset><legend>Pergunta ' + p.n + '</legend>' +
+            '<div class="opts">' + opcoes + '</div>' +
+          '</fieldset>' +
+          (c.divergencia
+            ? '<label class="flag"><input type="checkbox" data-div="' + p.n + '">o time divergiu nesta pergunta</label>'
+            : '') +
+        '</div>';
+
+      lista.appendChild(li);
+    });
+
+    // restaura o que já havia sido respondido neste modo
+    var d = dados();
+    Object.keys(d.respostas).forEach(function(n){
+      var input = lista.querySelector('input[name="p' + n + '"][value="' + d.respostas[n] + '"]');
+      if (input){
+        input.checked = true;
+        document.getElementById("q" + n).classList.add("answered");
+      }
+    });
+    Object.keys(d.divergencias).forEach(function(n){
+      if (!d.divergencias[n]) return;
+      var chk = lista.querySelector('input[data-div="' + n + '"]');
+      if (chk){
+        chk.checked = true;
+        document.getElementById("q" + n).classList.add("divergente");
+      }
+    });
+  }
+
+  function aplicarModo(modo, focar){
+    modoAtual = modo;
+    var c = cfg();
+
+    abas.forEach(function(b){
+      var ativo = b.getAttribute("data-modo") === modo;
+      b.setAttribute("aria-selected", ativo ? "true" : "false");
+      b.tabIndex = ativo ? 0 : -1;
+      if (ativo){
+        painel.setAttribute("aria-labelledby", b.id);
+        if (focar) b.focus();
+      }
+    });
+
+    document.getElementById("eyebrow").innerHTML =
+      c.eyebrow.map(function(t){ return "<span>" + t + "</span>"; }).join("");
+    document.getElementById("subtitulo").textContent = c.subtitulo;
+    document.getElementById("lede").textContent = c.lede;
+    document.getElementById("protocolo").hidden = !c.protocolo;
+    document.getElementById("meta").hidden = !c.meta;
+    document.getElementById("nomeImp").textContent = c.nomes.imp;
+    document.getElementById("nomeUrg").textContent = c.nomes.urg;
+    document.getElementById("nomeCir").textContent = c.nomes.cir;
+    rotuloCont.textContent = c.rotuloContagem;
+    btnCalcular.textContent = c.textoCalcular;
+    document.getElementById("cabecalhoResultado").textContent = c.cabecalho;
+
+    resultado.hidden = true;
+    document.getElementById("avisoCopia").textContent = "";
+
+    montarPerguntas();
+    atualizarProgresso();
+  }
+
+  /* ---------------- abas ---------------- */
+
+  abas.forEach(function(b){
+    b.addEventListener("click", function(){
+      if (b.getAttribute("aria-selected") === "true") return;
+      aplicarModo(b.getAttribute("data-modo"), false);
+      document.querySelector("header").scrollIntoView({ behavior:"smooth", block:"start" });
+    });
   });
 
-  var contador = document.getElementById("contador");
-  var statusTexto = document.getElementById("statusTexto");
-  var barra = document.getElementById("barraProgresso");
-  var btnCalcular = document.getElementById("btnCalcular");
-  var dica = document.getElementById("dica");
-  var resultado = document.getElementById("resultado");
+  document.querySelector(".tabs").addEventListener("keydown", function(e){
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    aplicarModo(modoAtual === "pessoal" ? "time" : "pessoal", true);
+  });
+
+  /* ---------------- respostas ---------------- */
 
   lista.addEventListener("change", function(e){
-    if (e.target.type !== "radio") return;
-    var n = parseInt(e.target.name.slice(1), 10);
-    respostas[n] = parseInt(e.target.value, 10);
-    document.getElementById("q" + n).classList.add("answered");
-    atualizarProgresso();
+    var alvo = e.target;
+    if (alvo.type === "radio"){
+      var n = parseInt(alvo.name.slice(1), 10);
+      dados().respostas[n] = parseInt(alvo.value, 10);
+      document.getElementById("q" + n).classList.add("answered");
+      atualizarProgresso();
+    } else if (alvo.type === "checkbox"){
+      var d = parseInt(alvo.getAttribute("data-div"), 10);
+      dados().divergencias[d] = alvo.checked;
+      document.getElementById("q" + d).classList.toggle("divergente", alvo.checked);
+    }
   });
 
-  function respondidas(){ return Object.keys(respostas).length; }
+  function respondidas(){ return Object.keys(dados().respostas).length; }
 
   function proximaPendente(){
-    for (var i = 0; i < PERGUNTAS.length; i++){
-      if (!respostas[PERGUNTAS[i].n]) return PERGUNTAS[i].n;
-    }
+    var r = dados().respostas;
+    for (var i = 1; i <= 9; i++){ if (!r[i]) return i; }
     return null;
   }
 
@@ -472,12 +654,14 @@
     } else {
       statusTexto.textContent = "Próxima: pergunta " + pendente;
       btnCalcular.disabled = true;
-      dica.textContent = "Faltam " + (9 - qtd) + " de 9 para liberar o resultado.";
+      dica.textContent = qtd === 0 ? cfg().dicaInicial : "Faltam " + (9 - qtd) + " de 9 para liberar o resultado.";
     }
   }
 
-  var C = 2 * Math.PI * 90;    // circunferência do anel interno
-  var CR = 2 * Math.PI * 112;  // circunferência do anel de referência
+  /* ---------------- mostrador ---------------- */
+
+  var C  = 2 * Math.PI * 90;
+  var CR = 2 * Math.PI * 112;
 
   function desenharArco(el, inicioPct, tamanhoPct, circ){
     var gap = tamanhoPct > 4 ? 0.9 : 0;
@@ -486,7 +670,6 @@
     el.setAttribute("stroke-dashoffset", -(inicioPct / 100 * circ));
   }
 
-  // marcas de 10% em 10% ao redor do mostrador
   (function(){
     var g = document.getElementById("ticks");
     for (var i = 0; i < 20; i++){
@@ -503,22 +686,6 @@
     }
   })();
 
-  function textoImportancia(p){
-    if (p >= 65) return "Sua rotina está ancorada no que realmente importa: metas com passos definidos, pessoas próximas e tempo pessoal. O trabalho aqui é proteger esse espaço quando a pressão aumentar.";
-    if (p >= 45) return "Existe base construída, mas ainda dividida com o que aparece de fora. Um bom próximo passo é bloquear na agenda, com antecedência, as tarefas importantes e não negociáveis da semana.";
-    return "O que é importante está sendo espremido pelo resto. Escolha duas metas concretas para os próximos 90 dias e reserve horário fixo para elas antes que o dia comece a ser preenchido por outros.";
-  }
-  function textoUrgencia(p){
-    if (p <= 25) return "O nível de urgência está saudável. Imprevistos acontecem, mas não comandam sua agenda.";
-    if (p <= 40) return "A urgência já ocupa espaço demais. Vale mapear quais emergências são recorrentes: urgência que se repete costuma ser importância adiada.";
-    return "Você está apagando incêndios. Boa parte disso nasce de prazos deixados para a última hora — antecipar entregas em um ou dois dias já reduz bastante essa esfera.";
-  }
-  function textoCircunstancia(p){
-    if (p <= 15) return "Pouco tempo perdido com o que não gera resultado. Seus filtros para interrupções e pedidos externos estão funcionando.";
-    if (p <= 30) return "Interrupções e pedidos de terceiros já consomem uma fatia relevante do dia. Blocos sem notificação e um \"não\" mais frequente devolvem boa parte desse tempo.";
-    return "Esta é a esfera que mais rouba seu dia: tarefas sem resultado, interrupções e demandas aceitas por reflexo. Comece questionando cada pedido novo antes de aceitá-lo.";
-  }
-
   function delta(atual, ref, invertido){
     var d = Math.round(atual - ref);
     var el = { texto: (d > 0 ? "+" : "") + d + " p.p.", classe: "ok" };
@@ -528,14 +695,19 @@
     return el;
   }
 
+  /* ---------------- resultado ---------------- */
+
   function calcular(){
+    var c = cfg(), r = dados().respostas, divs = dados().divergencias;
     var A = 0, B = 0, Cc = 0;
-    PERGUNTAS.forEach(function(p){
-      var v = respostas[p.n];
+
+    c.perguntas.forEach(function(p){
+      var v = r[p.n];
       if (p.esfera === "A") A += v;
       else if (p.esfera === "B") B += v;
       else Cc += v;
     });
+
     var G = A + B + Cc;
     var pB = B / G * 100, pA = A / G * 100, pC = Cc / G * 100;
 
@@ -556,6 +728,16 @@
     eB.textContent = dB.texto; eB.className = "delta " + dB.classe;
     eA.textContent = dA.texto; eA.className = "delta " + dA.classe;
     eC.textContent = dC.texto; eC.className = "delta " + dC.classe;
+
+    var time = "", data = "";
+    if (c.meta){
+      time = (document.getElementById("nomeTime").value || "").trim();
+      data = (document.getElementById("dataSessao").value || "").trim();
+    }
+    var cab = c.cabecalho;
+    if (time) cab += " · " + time;
+    if (data) cab += " · " + data;
+    document.getElementById("cabecalhoResultado").textContent = cab;
 
     resultado.hidden = false;
 
@@ -579,36 +761,65 @@
     document.getElementById("dialValor").setAttribute("fill", maior[2]);
     document.getElementById("dialNome").textContent = maior[0];
 
-    document.getElementById("leitura").innerHTML =
-      '<div class="note imp"><h3>Importância · ' + Math.round(pB) + '%</h3><p>' + textoImportancia(pB) + '</p></div>' +
-      '<div class="note urg"><h3>Urgência · ' + Math.round(pA) + '%</h3><p>' + textoUrgencia(pA) + '</p></div>' +
-      '<div class="note cir"><h3>Circunstância · ' + Math.round(pC) + '%</h3><p>' + textoCircunstancia(pC) + '</p></div>';
+    var lImp = c.leitura.imp(pB), lUrg = c.leitura.urg(pA), lCir = c.leitura.cir(pC);
+
+    var html =
+      '<div class="note imp"><h3>Importância · ' + Math.round(pB) + '%</h3><p>' + lImp.d + '</p><p class="acao"><b>Ação</b> · ' + lImp.a + '</p></div>' +
+      '<div class="note urg"><h3>Urgência · ' + Math.round(pA) + '%</h3><p>' + lUrg.d + '</p><p class="acao"><b>Ação</b> · ' + lUrg.a + '</p></div>' +
+      '<div class="note cir"><h3>Circunstância · ' + Math.round(pC) + '%</h3><p>' + lCir.d + '</p><p class="acao"><b>Ação</b> · ' + lCir.a + '</p></div>';
+
+    var listaDivs = [];
+    if (c.divergencia){
+      listaDivs = Object.keys(divs).filter(function(k){ return divs[k]; })
+                        .map(Number).sort(function(a,b){ return a - b; });
+      if (listaDivs.length){
+        html += '<div class="note div"><h3>Divergência · ' + listaDivs.length + ' de 9</h3>' +
+                '<p>O time não chegou a consenso confortável nas perguntas ' + listaDivs.join(", ") + '. ' +
+                'Divergência costuma significar que as pessoas vivem semanas diferentes: quem está de plantão, quem carrega o legado ou quem participa de mais reuniões enxerga outra realidade. Esse é o ponto mais útil da sessão — vale voltar nele antes de escolher as ações.</p></div>';
+      } else {
+        html += '<div class="note div"><h3>Divergência · nenhuma</h3>' +
+                '<p>O time convergiu nas 9 perguntas. Se a conversa foi rápida demais, vale desconfiar: consenso instantâneo às vezes é sinal de que a primeira nota dita ancorou o grupo, e não de que todos enxergam o mesmo.</p></div>';
+      }
+    }
+
+    document.getElementById("leitura").innerHTML = html;
+
+    var linhas = c.perguntas.map(function(p){
+      return "  " + p.n + ". [" + p.esfera + "] nota " + r[p.n] + (c.divergencia && divs[p.n] ? "  (divergência)" : "");
+    }).join("\n");
 
     window.__resumo =
-      "Tríade do Tempo — resultado\n" +
-      "Importância: " + Math.round(pB) + "% (" + B + " pts) · referência 70%\n" +
+      c.tituloResumo + "\n" +
+      (time ? "Time: " + time + "\n" : "") +
+      (data ? "Data: " + data + "\n" : "") +
+      "\nImportância: " + Math.round(pB) + "% (" + B + " pts) · referência 70%\n" +
       "Urgência: " + Math.round(pA) + "% (" + A + " pts) · referência 20%\n" +
       "Circunstância: " + Math.round(pC) + "% (" + Cc + " pts) · referência 10%\n" +
-      "Total geral: " + G + " pontos\n" +
-      "Esfera predominante: " + maior[0] + ".";
+      "Total geral: " + G + " pontos · esfera predominante: " + maior[0] + "\n" +
+      "\nNotas:\n" + linhas + "\n" +
+      (c.divergencia ? "\nDivergências: " + (listaDivs.length ? "perguntas " + listaDivs.join(", ") : "nenhuma") + "\n" : "") +
+      "\nAções sugeridas:\n" +
+      "  Importância · " + lImp.a + "\n" +
+      "  Urgência · " + lUrg.a + "\n" +
+      "  Circunstância · " + lCir.a;
 
-    resultado.scrollIntoView({ behavior: "smooth", block: "start" });
+    resultado.scrollIntoView({ behavior:"smooth", block:"start" });
   }
 
-  btnCalcular.addEventListener("click", calcular);
+  /* ---------------- ações ---------------- */
 
+  btnCalcular.addEventListener("click", calcular);
   document.getElementById("btnLimpar").addEventListener("click", reiniciar);
   document.getElementById("btnRefazer").addEventListener("click", function(){
     reiniciar();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top:0, behavior:"smooth" });
   });
 
   function reiniciar(){
-    respostas = {};
-    Array.prototype.forEach.call(lista.querySelectorAll("input"), function(i){ i.checked = false; });
-    Array.prototype.forEach.call(lista.querySelectorAll("li.q"), function(l){ l.classList.remove("answered"); });
+    estado[modoAtual] = { respostas:{}, divergencias:{} };
     resultado.hidden = true;
     document.getElementById("avisoCopia").textContent = "";
+    montarPerguntas();
     atualizarProgresso();
   }
 
@@ -616,10 +827,8 @@
     var aviso = document.getElementById("avisoCopia");
     var emIframe = true;
     try { emIframe = (window.self !== window.top); } catch (e) { emIframe = true; }
-
     var abriu = true;
     try { window.print(); } catch (e) { abriu = false; }
-
     if (!abriu || emIframe){
       aviso.textContent = "Se a janela de impressão não abrir, é porque esta visualização roda dentro de um quadro protegido. Baixe o arquivo, abra no navegador e use Ctrl+P (ou Cmd+P no Mac).";
     } else {
@@ -651,7 +860,7 @@
     }
   });
 
-  atualizarProgresso();
+  aplicarModo("pessoal", false);
 })();
 </script>
 </body>
